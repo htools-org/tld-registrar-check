@@ -20,32 +20,32 @@ function RegistrarTable(props) {
   if (!data?.length) return;
 
   return (
-    <div className="mt-8 mx-auto max-w-sm overflow-x-auto relative shadow-md sm:rounded-lg">
+    <div className="relative max-w-sm mx-auto mt-8 overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th className="py-3 px-6">Registrar</th>
-            <th className="py-3 px-6">Available</th>
+            <th className="px-6 py-3">Registrar</th>
+            <th className="px-6 py-3">Available</th>
           </tr>
         </thead>
         <tbody>
           {data.map((row, idx) => (
             <tr key={idx} className="bg-white border-b">
-              <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                 {row.name}
               </td>
-              <td className="py-4 px-6">
+              <td className="px-6 py-4">
                 {row.listed ?
                   ('Yes' + (row.registerPrice ? ` ($${row.registerPrice})` : ''))
                   : 'No'
                 }
               </td>
-              <td className="py-4 px-6">
+              <td className="px-6 py-4">
                 {row.listed && <a
                   href={row.tldUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-blue-600  hover:underline">
+                  className="font-medium text-blue-600 hover:underline">
                   Open
                 </a>}
               </td>
@@ -66,10 +66,10 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
-        <title>TLS Registrar Check</title>
+        <title>TLD Registrar Check</title>
       </Head>
 
-      <header className="text-center mt-12 lg:mt-20 text-2xl px-4 font-black text-gray-500">
+      <header className="px-4 mt-12 text-2xl font-black text-center text-gray-500 lg:mt-20">
         Check if your TLD has been listed on all registrars
       </header>
 
@@ -77,7 +77,7 @@ export default function Home() {
         <div className="text-center">
           <input
             type="text"
-            className="rounded-lg border-4 border-gray-500 border-opacity-50 p-2 text-lg font-medium text-center"
+            className="p-2 text-lg font-medium text-center border-4 border-gray-500 border-opacity-50 rounded-lg"
             placeholder="Type TLD here"
             value={tld}
             onChange={(e) => setTld(e.target.value)}
@@ -89,13 +89,13 @@ export default function Home() {
         }
 
         {(tld !== debouncedTld || loading) &&
-          <p className="mt-8 px-12 text-center">
+          <p className="px-12 mt-8 text-center">
             Loading...<br />
             (this can take several seconds for the first search)
           </p>
         }
 
-        <p className="mt-8 px-4 text-center text-red-700">{error}</p>
+        <p className="px-4 mt-8 text-center text-red-700">{error}</p>
       </main>
 
       <footer
