@@ -26,6 +26,7 @@ function RegistrarTable(props) {
           <tr>
             <th className="px-6 py-3">Registrar</th>
             <th className="px-6 py-3">Available</th>
+            <th className="px-6 py-3">Link</th>
           </tr>
         </thead>
         <tbody>
