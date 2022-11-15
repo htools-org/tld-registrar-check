@@ -61,7 +61,7 @@ async function checkEncirca(tld) {
   if (!encircaData) return null;
 
   // Get TLD
-  const tldData = encircaData.filter(x => x.tlds?.[0]?.name === tld)?.[0];
+  const tldData = encircaData.filter(x => x.tlds?.[0]?.name === tld && x.type === 'Domain Order')?.[0];
   // {
   //   "_id": "5ee3dce1cc09a824d2437a1e",
   //   "price_regular": "20",
