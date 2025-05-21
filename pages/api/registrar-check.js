@@ -133,6 +133,32 @@ async function check101Domain(tld) {
   }
 }
 
+
+
+async function checkNamebase(tld) {
+  // unlikely to be premium
+  const randomName = Math.random().toString(36).substring(2, 15);
+
+  return fetch(`https://www.namebase.io/api/registrar/search?term=${randomName}.${tld}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data?.results?.length) return null;
+      const [first] = data.results;
+
+      if (first.status === 'unsupported') {
+        return {
+          listed: false,
+          registerPrice: null,
+        };
+      }
+
+      return {
+        listed: true,
+        registerPrice: first?.fees?.create,
+      };
+    });
+}
+
 export default async (req, res) => {
   const tld = req.query.tld?.toLowerCase();
   if (!tld || tld.length > 100) {
@@ -144,6 +170,7 @@ export default async (req, res) => {
     checkEncirca(tld),
     checkPorkbun(tld),
     check101Domain(tld),
+    checkNamebase(tld),
   ])).map(x => x.status === 'fulfilled' ? x.value : null);
 
   return res.json([
@@ -151,5 +178,6 @@ export default async (req, res) => {
     { name: 'Encirca', tldUrl: `https://www.encirca.com/handshake-${tld}/`, ...results[1] },
     { name: 'Porkbun', tldUrl: `https://porkbun.com/tld/${tld}`, ...results[2] },
     { name: '101Domain', tldUrl: `https://www.101domain.com/blockchain_domains.htm`, ...results[3] },
+    { name: 'Namebase', tldUrl: `https://www.namebase.io/registrar/search/${tld}`, ...results[4] },
   ]);
 };
