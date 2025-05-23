@@ -39,7 +39,7 @@ async function checkNamecheap(tld) {
   // }
   return {
     listed: !!tldData,
-    registerPrice: tldData?.Register?.Price,
+    registerPrice: tldData?.RegularPrice?.Price.toFixed(2),
   }
 }
 
@@ -75,7 +75,7 @@ async function checkEncirca(tld) {
   // }
   return {
     listed: !!tldData,
-    registerPrice: tldData?.price_sale,
+    registerPrice: Number(tldData?.price_regular).toFixed(2),
   }
 }
 
@@ -100,7 +100,7 @@ async function checkPorkbun(tld) {
   // "xp":{"registration":"11.64","renewal":"11.64","transfer":"11.64","coupons":[]
   return {
     listed: !!tldData,
-    registerPrice: tldData?.registration,
+    registerPrice: Number(tldData?.registration).toFixed(2),
   }
 }
 
@@ -154,7 +154,7 @@ async function checkNamebase(tld) {
 
       return {
         listed: true,
-        registerPrice: first?.fees?.create,
+        registerPrice: Number(first?.fees?.create).toFixed(2),
       };
     });
 }
