@@ -11,7 +11,8 @@ const cache = new Cache({
   trim: 1 * 60, // 1 min
 })
 
-async function checkNamecheap(tld) {
+// Old namecheap check
+async function checkNamecheapHtml(tld) {
   // Get namecheap data
   let ncData = cache.getOrDefault('namecheap', null);
   if (!ncData) {
@@ -40,6 +41,49 @@ async function checkNamecheap(tld) {
   return {
     listed: !!tldData,
     registerPrice: tldData?.RegularPrice?.Price.toFixed(2),
+  }
+}
+
+async function checkNamecheap(tld) {
+  const apiBase = process.env.NAMECHEAP_API_BASE;
+  const apiKey = process.env.NAMECHEAP_API_KEY;
+  const apiUser = process.env.NAMECHEAP_API_USER;
+  if (!apiBase || !apiKey || !apiUser) throw new Error('No API base/key/user specified for Namecheap');
+
+  let ncData = cache.getOrDefault('namecheap:' + tld, null);
+
+  if (!ncData) {
+    const res = await fetch(
+      `${apiBase}/xml.response?ApiUser=${apiUser}&ApiKey=${apiKey}&UserName=${apiUser}&Command=namecheap.users.getPricing&ClientIp=192.168.1.1&ProductType=DOMAIN&ProductCategory=DOMAINS&ActionName=REGISTER&ProductName=${tld}`
+    );
+
+    const xml = await res.text();
+
+    const regex = /<Price Duration="1" ?(.+) ?\/>/;
+    const m = xml.match(regex);
+    if (!m || !m[1]) return null;
+
+    // m[1]:
+    // DurationType="YEAR" Price="20.00" PricingType="MULTIPLE" RegularPrice="20.00" RegularPriceType="MULTIPLE" YourPrice="20.00" YourPriceType="MULTIPLE" PromotionPrice="0.0" Currency="USD"
+    // console.log({ match: m[1] });
+
+    // { "DurationType": "YEAR", "Price": "20.00", "PricingType": "MULTIPLE", "RegularPrice": "20.00", "RegularPriceType": "MULTIPLE", "YourPrice": "20.00", "YourPriceType": "MULTIPLE", "PromotionPrice": "0.0", "Currency": "USD" }
+    const parsed = m[1].trim().split(" ").reduce((acc, pair) => {
+      const [k, v] = pair.split("=");
+      acc[k] = v.slice(1, -1);
+      return acc;
+    }, {});
+
+    ncData = parsed;
+    cache.set('namecheap:' + tld, ncData);
+  }
+
+  // sanity check
+  if (!ncData) return null;
+
+  return {
+    listed: true,
+    registerPrice: Number(ncData.Price).toFixed(2),
   }
 }
 
