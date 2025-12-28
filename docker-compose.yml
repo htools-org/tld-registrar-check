@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: ghcr.io/htools-org/tld-registrar-check:latest
     ports:
       - "3000:3000"
     environment:
