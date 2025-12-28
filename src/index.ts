@@ -38,4 +38,16 @@ const server = serve({
   },
 });
 
+process.on('SIGINT', () => {
+  console.log('SIGINT received');
+  server.stop();
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received');
+  server.stop();
+  process.exit(0);
+});
+
 console.log(`🚀 Server running at ${server.url}`);
