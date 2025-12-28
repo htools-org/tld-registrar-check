@@ -104,7 +104,7 @@ export default function Home() {
       >
         <p className="text-sm font-medium">
           Made with ♥️ by {' '}
-          <a href="https://blek.ga"
+          <a href="https://blek.space"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"
