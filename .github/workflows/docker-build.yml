@@ -12,7 +12,6 @@ concurrency:
 jobs:
   build-and-publish-image:
     runs-on: ubuntu-latest
-    if: github.repository_owner == github.actor
 
     permissions:
       contents: read
