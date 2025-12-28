@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+bun.lock
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentation
+README.md
+LICENSE
+*.md
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Build artifacts
+dist/
+build/
+*.log
+
+# Test files
+test/
+tests/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Cache
+.cache/
+*.cache
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# TypeScript
+*.tsbuildinfo
