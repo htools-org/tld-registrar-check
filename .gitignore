@@ -1,39 +1,34 @@
-# Created by https://www.toptal.com/developers/gitignore/api/nextjs
-# Edit at https://www.toptal.com/developers/gitignore?templates=nextjs
+# dependencies (bun install)
+node_modules
 
-### NextJS ###
-# Dependencies
-/node_modules
-/.pnp
-.pnp.js
+# output
+out
+dist
+*.tgz
 
-# Testing
-/coverage
+# code coverage
+coverage
+*.lcov
 
-# Next.js
-/.next/
-/out/
+# logs
+logs
+_.log
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
-# Production
-/build
-
-# Misc
-.DS_Store
-*.pem
-
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# Local env files
-.env.local
+# dotenv environment variable files
+.env
 .env.development.local
 .env.test.local
 .env.production.local
+.env.local
 
-# Vercel
-.vercel
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo
 
-# End of https://www.toptal.com/developers/gitignore/api/nextjs
+# IntelliJ based IDEs
+.idea
+
+# Finder (MacOS) folder config
+.DS_Store
