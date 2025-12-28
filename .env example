@@ -1,0 +1,4 @@
+# Namecheap API
+NAMECHEAP_API_BASE=https://api.namecheap.com # or https://api.sandbox.namecheap.com
+NAMECHEAP_API_USER=
+NAMECHEAP_API_KEY=

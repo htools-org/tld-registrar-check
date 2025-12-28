@@ -1,0 +1,20 @@
+name: tld-registrar-check
+
+services:
+  tld-registrar-check:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NAMECHEAP_API_BASE=${NAMECHEAP_API_BASE}
+      - NAMECHEAP_API_USER=${NAMECHEAP_API_USER}
+      - NAMECHEAP_API_KEY=${NAMECHEAP_API_KEY}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

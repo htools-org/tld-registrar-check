@@ -24,6 +24,4 @@ USER app
 
 COPY --from=builder /app/dist ./
 
-EXPOSE 3000
-
 CMD ["bun", "index.js"]
